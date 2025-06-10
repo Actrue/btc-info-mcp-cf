@@ -1,5 +1,4 @@
 import { okx } from "./okx";
-import { getKvMessageByCoinType } from "./kv";
 
 function getEmoji(percentChange: number): string {
     if (percentChange > 10) return '🚀'; // 飙升
@@ -19,7 +18,7 @@ function getEmoji(percentChange: number): string {
 
 export async function generateMessage(coinType:string) {
     const cryptoDataInfo=await okx.getCryptoInfo(coinType)
-    const aiMessage=await getKvMessageByCoinType(coinType)
+    
     if(!cryptoDataInfo.states){
         console.log(cryptoDataInfo)
         throw new Error('获取数据失败')
@@ -33,6 +32,6 @@ export async function generateMessage(coinType:string) {
            `5日均价: ${cryptoData.ma5.toFixed(2)} (偏离: ${cryptoData.deviationPercent.toFixed(2)}%)\n` +
            `100日最高价: ${cryptoData.maxPrice.toFixed(2)}\n` +
            `100日最低价: ${cryptoData.minPrice.toFixed(2)}\n` +
-           `前一日交易量相较于前五日平均交易量变化的百分比: ${cryptoData.volumeDeviationPercent.toFixed(2)}%\n` +
-           `AI信息: ${aiMessage.data}` ;
+           `前一日交易量相较于前五日平均交易量变化的百分比: ${cryptoData.volumeDeviationPercent.toFixed(2)}%\n`;
+         
 }
